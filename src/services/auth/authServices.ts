@@ -49,7 +49,7 @@ export class AuthService {
 
     async createOwner(params: TabPosUser): Promise<any> {
         try {
-            const { nomor_telepon, password, nama } = params;
+            const { nomor_telepon, password, nama, role_id } = params;
 
             const existingUser = await this.usersRepository.findOne({
                 where: { nomor_telepon: nomor_telepon },
@@ -67,8 +67,7 @@ export class AuthService {
             const createOwner = this.usersRepository.create({
                 nama: nama,
                 nomor_telepon: nomor_telepon,
-                password: passwordUser,
-                role_id: { id_role: findRole.id_role }
+                password: passwordUser
             });
 
             const saveData = await this.usersRepository.save(createOwner);

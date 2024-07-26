@@ -16,7 +16,7 @@ export class AuthController {
         return { data, user };
     }
 
-    @Post('create/owner')
+    @Post('create/user')
     async createOwner(@Body() params: TabPosUser): Promise<any> {
         try {
             const response = await this.authService.createOwner(params)
