@@ -16,6 +16,9 @@ export class TabPosBarang {
     amount: number
 
     @Column(('double'), { nullable: true })
+    amount_default: number
+
+    @Column(('double'), { nullable: true })
     qty: number
 
     @Column({ nullable: true })

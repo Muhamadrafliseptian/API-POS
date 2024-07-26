@@ -2,11 +2,11 @@ import { Controller, Post, Body, HttpStatus, Param } from '@nestjs/common';
 import { AuthService } from '../../services/Auth/AuthServices'
 import { TabPosUser } from 'src/entities/user';
 
-@Controller('api/auth')
+@Controller('api')
 export class AuthController {
     constructor(private readonly authService: AuthService) { }
 
-    @Post('login')
+    @Post('auth/login')
     async login(@Body() params: TabPosUser): Promise<any> {
         const user = await this.authService.validateUser(params);
         if (!user) {
@@ -16,7 +16,7 @@ export class AuthController {
         return { data, user };
     }
 
-    @Post('create/user')
+    @Post('auth/create/user')
     async createOwner(@Body() params: TabPosUser): Promise<any> {
         try {
             const response = await this.authService.createOwner(params)
@@ -26,7 +26,7 @@ export class AuthController {
         }
     }
 
-    @Post(':id_user/detail_profile')
+    @Post('auth/:id_user/detail_profile')
     async showProfile(@Param('id_user') id_user: string): Promise<any> { 
         try {
             const response = await this.authService.detailProfile(id_user)
@@ -36,10 +36,20 @@ export class AuthController {
         }
     }
 
-    @Post(':id_user/update_profile')
-    async putContactCategory(@Param("id_user") id_user: string, @Body() data: Partial<TabPosUser>): Promise<any>{
+    @Post('auth/:id_user/update_profile')
+    async updateProfile(@Param("id_user") id_user: string, @Body() data: Partial<TabPosUser>): Promise<any>{
         try {
             const response = await this.authService.updateProfile(id_user, data)
+            return response
+        } catch (err){
+            return err
+        }
+    }
+
+    @Post('user/all')
+    async getAllUser(): Promise<any>{
+        try {
+            const response = await this.authService.getUser()
             return response
         } catch (err){
             return err

@@ -114,4 +114,21 @@ export class AuthService {
             return { message: err.message, statusCode: HttpStatus.BAD_REQUEST };
         }
     }
+
+    async getUser():Promise<any>{
+        try {
+            const findUser = await this.usersRepository.find({relations: ['role_id']})
+
+            const mapUser = findUser.map(item=>({
+                id_user: item.id_user,
+                nama: item.nama,
+                nomor_telepon: item.nomor_telepon,
+                role: item.role_id.nama
+            }))
+
+            return {data: mapUser, total: mapUser.length, statusCode: HttpStatus.OK}
+        } catch (err){
+
+        }
+    }
 }
