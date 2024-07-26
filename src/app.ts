@@ -9,6 +9,7 @@ import { TabPosUser } from './entities/user';
 import { AuthModule } from './module/auth/authModule';
 import { MainModule } from './module/main/mainModule';
 import { TabPosTransaksi } from './entities/transaksi';
+import { TabHistoryBarang } from './entities/history_barang';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -29,7 +30,8 @@ import { TabPosTransaksi } from './entities/transaksi';
           TabPosBarang,
           TabPosKategoriBarang,
           TabPosUser,
-          TabPosTransaksi
+          TabPosTransaksi,
+          TabHistoryBarang
         ],
         synchronize: true,
       }),
