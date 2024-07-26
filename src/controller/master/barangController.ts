@@ -57,6 +57,26 @@ export class BarangController {
         }
     }
 
+    @Post('barang/:id_barang/in')
+    async inBarang(@Param('id_barang') id_barang: string, @Body() params: any) {
+        try {
+            const response = await this.barangService.inBarang(id_barang, params);
+            return response
+        } catch (err) {
+            return err
+        }
+    }
+
+    @Post('barang/:id_barang/out')
+    async outBarang(@Param('id_barang') id_barang: string, @Body() params: any) {
+        try {
+            const response = await this.barangService.outBarang(id_barang, params);
+            return response
+        } catch (err) {
+            return err
+        }
+    }
+
 
     @Post('kategori/create')
     async createKategori(@Body() params: TabPosKategoriBarang) {

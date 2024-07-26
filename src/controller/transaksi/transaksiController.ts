@@ -7,7 +7,7 @@ export class TransaksiController{
     constructor(
         private transaksiService: TransaksiServices
     ){}
-
+    @Post('all')
     async getTransaksi():Promise<any>{
         try {
             const response = await this.transaksiService.getTransaksi()
@@ -20,7 +20,8 @@ export class TransaksiController{
     @Post(':id_transaksi/detail')
     async getDetailTransaksi(@Param('id_transaksi') id_transaksi: string) :Promise<any>{
         try {
-
+            const response = await this.transaksiService.getDetailTransaksi(id_transaksi)
+            return response
         } catch (err){
             
         }

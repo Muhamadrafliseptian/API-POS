@@ -47,6 +47,10 @@ export class TransaksiServices {
                 relations: ['id_barang', 'id_user']
             })
 
+            if(!response){
+                return {message: 'not found', statusCode: HttpStatus.NOT_FOUND}
+            }
+
             const mapTransaksi = {
                 id_transaksi: response.id_transaksi,
                 data_pembeli: {

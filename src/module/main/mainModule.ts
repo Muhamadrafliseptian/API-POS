@@ -8,10 +8,11 @@ import { TabPosTransaksi } from 'src/entities/transaksi';
 import { TabPosUser } from 'src/entities/user';
 import { TransaksiServices } from 'src/services/transaksi/transaksiServices';
 import { TransaksiController } from 'src/controller/transaksi/transaksiController';
+import { TabHistoryBarang } from 'src/entities/history_barang';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([TabPosBarang, TabPosKategoriBarang, TabPosTransaksi, TabPosUser]),
+    TypeOrmModule.forFeature([TabPosBarang, TabPosKategoriBarang, TabPosTransaksi, TabPosUser, TabHistoryBarang]),
   ],
   providers: [BarangService, TransaksiServices],
   controllers: [BarangController, TransaksiController],
