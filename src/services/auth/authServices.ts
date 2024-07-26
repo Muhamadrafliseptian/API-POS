@@ -81,32 +81,37 @@ export class AuthService {
         }
     }
 
-    async createOfficer(params: TabPosUser): Promise<any> {
+    async detailProfile(id_user: string):Promise<any>{
         try {
-            const { nomor_telepon, password, nama } = params
-            const response = await this.usersRepository.findOne({
-                where: { nomor_telepon: nomor_telepon, nama: nama }
-            })
+            const findUser = await this.usersRepository.findOne({where: {id_user: id_user}, relations: ['role_id']})
 
+            return {data: findUser, statusCode: HttpStatus.OK}
+        } catch (err){
+
+        }
+    }
+
+    async updateProfile(id_user: string, updatedData: Partial<TabPosUser>): Promise<any> {
+        try {
+            const response = await this.usersRepository.findOne({
+                where: { id_user },
+                relations: ['role_id']
+            });
             if (!response) {
-                return
+                return { message: 'not found', statusCode: HttpStatus.NOT_FOUND };
             }
 
-            const findRole = await this.roleRepository.findOne({ where: { nama: 'officer' } })
+            if (updatedData.password) {
+                updatedData.password = await bcrypt.hash(updatedData.password, 10);
+            }
 
-            const passwordUser = await bcrypt.hash(password, 10)
-            const createOwner = await this.usersRepository.create({
-                nama,
-                nomor_telepon,
-                password: passwordUser,
-                role_id: { id_role: findRole.id_role }
-            })
+            Object.assign(response, updatedData);
+            await this.usersRepository.save(response);
 
-            const saveData = await this.usersRepository.save(createOwner)
-
-            return { message: 'success', statusCode: HttpStatus.CREATED }
+            return { message: 'Success Update Data', statusCode: HttpStatus.CREATED };
         } catch (err) {
-            return { message: err.message, statusCode: HttpStatus.BAD_REQUEST }
+            console.error('Error in updateProfile:', err.message);
+            return { message: err.message, statusCode: HttpStatus.BAD_REQUEST };
         }
     }
 }

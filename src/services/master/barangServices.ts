@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { TabPosBarang } from 'src/entities/barang';
 import { TabPosKategoriBarang } from 'src/entities/kategori';
+import * as moment from "moment-timezone";
 
 @Injectable()
 export class BarangService {
@@ -14,7 +15,13 @@ export class BarangService {
     ) { }
 
     async create(createBarangDto: TabPosBarang): Promise<any> {
-        const newBarang = this.barangRepository.create(createBarangDto);
+        const {added_at, ...restParams} = createBarangDto
+
+        const timestamp = moment().valueOf().toString()
+        const newBarang = this.barangRepository.create({
+            added_at: timestamp,
+            ...restParams,
+        });
         return await this.barangRepository.save(newBarang);
     }
 
@@ -23,7 +30,16 @@ export class BarangService {
 
         const count = data.length
 
-        return {data: data, total: count, statusCode: HttpStatus.OK}
+        const mapdata = data.map(item=>({
+            id_barang: item.id_barang,
+            nama: item.nama,
+            qty: item.qty,
+            amount: item.amount,
+            last_added_at: moment.tz(parseInt(item.added_at), 'Asia/Jakarta').format("DD MMMM YYY hh:mm z"),
+            kategori_barang: item.kategori_id.nama,
+        }))
+
+        return {data: mapdata, total: count, statusCode: HttpStatus.OK}
     }
 
     async findOne(id: string): Promise<any> {

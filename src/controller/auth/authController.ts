@@ -1,4 +1,4 @@
-import { Controller, Post, Body, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Body, HttpStatus, Param } from '@nestjs/common';
 import { AuthService } from '../../services/Auth/AuthServices'
 import { TabPosUser } from 'src/entities/user';
 
@@ -26,10 +26,20 @@ export class AuthController {
         }
     }
 
-    @Post('create/officer')
-    async createPemilik(@Body() params: TabPosUser): Promise<any> { 
+    @Post(':id_user/detail_profile')
+    async showProfile(@Param('id_user') id_user: string): Promise<any> { 
         try {
-            const response = await this.authService.createOfficer(params)
+            const response = await this.authService.detailProfile(id_user)
+            return response
+        } catch (err){
+            return err
+        }
+    }
+
+    @Post(':id_user/update_profile')
+    async putContactCategory(@Param("id_user") id_user: string, @Body() data: Partial<TabPosUser>): Promise<any>{
+        try {
+            const response = await this.authService.updateProfile(id_user, data)
             return response
         } catch (err){
             return err
