@@ -171,4 +171,30 @@ export class BarangService {
 
         }
     }
+
+    async historyBarang():Promise<any>{
+        try {
+            const response = await this.historyQtyRepository.find({relations: [
+                'id_user', 'id_barang',
+            ]})
+
+            const data = response.map(item=>({
+                nama_officer: item.id_user?.nama || null,
+                nomor_telepon_officer: item.id_user?.nomor_telepon || null,
+                // role: item.id_user?.role_id?.id_role || null,
+                barang: item.id_barang?.nama || null,
+                qty: item.qty || null,
+                keterangan: item.keterangan,
+                tanggal: moment.tz(parseInt(item.tanggal_updated), 'Asia/Jakarta').format("DD MMM YYYY hh:MM z") || null
+            }))
+
+
+            return {data: data, statusCode: HttpStatus.OK}
+        } catch (err){
+            console.log('====================================');
+            console.log(err.message);
+
+            console.log('====================================');
+        }
+    }
 }

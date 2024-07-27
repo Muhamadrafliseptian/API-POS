@@ -10,6 +10,7 @@ import { AuthModule } from './module/auth/authModule';
 import { MainModule } from './module/main/mainModule';
 import { TabPosTransaksi } from './entities/transaksi';
 import { TabHistoryBarang } from './entities/history_barang';
+import { TabPosTransaksiDetail } from './entities/transaksi_detail';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -31,7 +32,8 @@ import { TabHistoryBarang } from './entities/history_barang';
           TabPosKategoriBarang,
           TabPosUser,
           TabPosTransaksi,
-          TabHistoryBarang
+          TabHistoryBarang,
+          TabPosTransaksiDetail
         ],
         synchronize: true,
       }),

@@ -1,29 +1,31 @@
-import { Controller, Get, Param, Post } from "@nestjs/common";
-import { TransaksiServices } from "src/services/transaksi/transaksiServices";
+import { Controller, Post, Body, HttpStatus, Param } from '@nestjs/common';
+import { TransaksiService } from 'src/services/transaksi/transaksiServices';
+import { ProcessTransactionDto } from './transaksiDto';
 
 @Controller('api/transaksi')
+export class TransaksiController {
+    constructor(private readonly transaksiService: TransaksiService) { }
 
-export class TransaksiController{
-    constructor(
-        private transaksiService: TransaksiServices
-    ){}
     @Post('all')
-    async getTransaksi():Promise<any>{
-        try {
-            const response = await this.transaksiService.getTransaksi()
-            return response
-        } catch (err){
-
-        }
+    async getAllTransaksi() {
+        return this.transaksiService.getAllTransaksi();
     }
-    
-    @Post(':id_transaksi/detail')
-    async getDetailTransaksi(@Param('id_transaksi') id_transaksi: string) :Promise<any>{
-        try {
-            const response = await this.transaksiService.getDetailTransaksi(id_transaksi)
-            return response
-        } catch (err){
-            
-        }
+
+    @Post('checkout')
+    async processTransaction(@Body() body: ProcessTransactionDto): Promise<any> {
+        const { id_user, items } = body;
+        const result = await this.transaksiService.processTransaction(id_user, items);
+        return result;
+    }
+
+    @Post(':id_user/detail_transaksi/officer')
+    async getTransaksi(@Param('id_user') id_user: string): Promise<any> {
+        return this.transaksiService.getTransaksiByOfficer(id_user);
+    }
+
+    @Post(':id_transaksi/detail_transaksi')
+    async getTransaksiDataById(@Param('id_transaksi') id_transaksi: string): Promise<any> {
+        return this.transaksiService.getTransaksiDataById(id_transaksi);
     }
 }
+

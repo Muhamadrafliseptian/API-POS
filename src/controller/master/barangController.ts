@@ -77,6 +77,16 @@ export class BarangController {
         }
     }
 
+    @Post('barang/history')
+    async historyBarang() {
+        try {
+            const response = await this.barangService.historyBarang();
+            return response
+        } catch (err) {
+            return err
+        }
+    }
+
 
     @Post('kategori/create')
     async createKategori(@Body() params: TabPosKategoriBarang) {
