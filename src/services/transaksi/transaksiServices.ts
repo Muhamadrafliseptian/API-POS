@@ -194,6 +194,7 @@ export class TransaksiService {
                     qty: detail.qty,
                     amount: detail.amount
                 })),
+                nama_shift: item.nama_shift || null,
                 in_amount: item.in_amount,
                 return_amount: item.return_amount,
                 total_amount: item.details.reduce((sum, detail) => sum + (detail.qty * (detail.id_barang.amount + detail.id_barang.amount_default)), 0),
