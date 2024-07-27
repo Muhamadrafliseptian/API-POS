@@ -122,7 +122,8 @@ export class BarangService {
                 id_user: { id_user: id_user },
                 id_barang: { id_barang: findBarang.id_barang },
                 keterangan: "IN",
-                tanggal_updated: timestamp
+                tanggal_updated: timestamp,
+                qty: qty
             })
 
             console.log('====================================');
@@ -183,7 +184,7 @@ export class BarangService {
                 nomor_telepon_officer: item.id_user?.nomor_telepon || null,
                 // role: item.id_user?.role_id?.id_role || null,
                 barang: item.id_barang?.nama || null,
-                qty: item.qty || null,
+                qty: item.id_barang.qty || null,
                 keterangan: item.keterangan,
                 tanggal: moment.tz(parseInt(item.tanggal_updated), 'Asia/Jakarta').format("DD MMM YYYY hh:MM z") || null
             }))

@@ -13,8 +13,8 @@ export class TransaksiController {
 
     @Post('checkout')
     async processTransaction(@Body() body: ProcessTransactionDto): Promise<any> {
-        const { id_user, items } = body;
-        const result = await this.transaksiService.processTransaction(id_user, items);
+        const { id_user, in_amount, nama_shift,items } = body;
+        const result = await this.transaksiService.processTransaction(id_user, in_amount, nama_shift,items);
         return result;
     }
 

@@ -11,6 +11,7 @@ import { MainModule } from './module/main/mainModule';
 import { TabPosTransaksi } from './entities/transaksi';
 import { TabHistoryBarang } from './entities/history_barang';
 import { TabPosTransaksiDetail } from './entities/transaksi_detail';
+import { TabScheduleShift } from './entities/schedule_shift';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -33,7 +34,8 @@ import { TabPosTransaksiDetail } from './entities/transaksi_detail';
           TabPosUser,
           TabPosTransaksi,
           TabHistoryBarang,
-          TabPosTransaksiDetail
+          TabPosTransaksiDetail,
+          TabScheduleShift
         ],
         synchronize: true,
       }),

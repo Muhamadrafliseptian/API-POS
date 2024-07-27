@@ -10,12 +10,15 @@ import { TransaksiService } from 'src/services/transaksi/transaksiServices';
 import { TransaksiController } from 'src/controller/transaksi/transaksiController';
 import { TabHistoryBarang } from 'src/entities/history_barang';
 import { TabPosTransaksiDetail } from 'src/entities/transaksi_detail';
+import { DashboardServices } from 'src/services/master/dashboardServices';
+import { DashboardController } from 'src/controller/master/dashboardController';
+import { TabScheduleShift } from 'src/entities/schedule_shift';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([TabPosBarang, TabPosTransaksiDetail,TabPosKategoriBarang, TabPosTransaksi, TabPosUser, TabHistoryBarang]),
+    TypeOrmModule.forFeature([TabPosBarang, TabPosTransaksiDetail,TabPosKategoriBarang, TabPosTransaksi, TabPosUser, TabHistoryBarang, TabScheduleShift]),
   ],
-  providers: [BarangService, TransaksiService],
-  controllers: [BarangController, TransaksiController],
+  providers: [BarangService, TransaksiService, DashboardServices],
+  controllers: [BarangController, TransaksiController, DashboardController],
 })
 export class MainModule {}

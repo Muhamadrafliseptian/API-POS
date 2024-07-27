@@ -67,7 +67,8 @@ export class AuthService {
             const createOwner = this.usersRepository.create({
                 nama: nama,
                 nomor_telepon: nomor_telepon,
-                password: passwordUser
+                password: passwordUser,
+                role_id,
             });
 
             const saveData = await this.usersRepository.save(createOwner);

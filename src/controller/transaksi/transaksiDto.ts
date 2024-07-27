@@ -15,6 +15,9 @@ export class ProcessTransactionDto {
     @IsNotEmpty()
     @IsString()
     id_user: string;
+    in_amount: number;
+
+    nama_shift: string;
 
     @IsNotEmpty()
     @IsArray()
