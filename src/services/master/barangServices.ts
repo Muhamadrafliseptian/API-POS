@@ -38,7 +38,8 @@ export class BarangService {
             nama: item.nama,
             qty: item.qty,
             amount: item.amount,
-            last_added_at: moment.tz(parseInt(item.added_at), 'Asia/Jakarta').format("DD MMMM YYY hh:mm z"),
+            amount_default: item.amount_default || 0,
+            last_added_at: moment.tz(parseInt(item.added_at), 'Asia/Jakarta').format("DD MMMM YYYY HH:mm z"),
             kategori_barang: item.kategori_id.nama,
         }))
 
@@ -50,7 +51,19 @@ export class BarangService {
         if (!barang) {
             throw new NotFoundException(`Barang with ID ${id} not found`);
         }
-        return { data: barang, statusCode: HttpStatus.OK };
+        return { data: {
+            id_barang: barang.id_barang,
+            nama: barang.nama,
+            amount: barang.amount,
+            code: barang.code,
+            qty: barang.qty,
+            kategori_id: {
+                id_kategori: barang.kategori_id.id_kategori_barang,
+                nama: barang.kategori_id.nama,
+                code: barang.kategori_id.code,
+            },
+            added_at: moment.tz(parseInt(barang.added_at), 'Asia/Jakarta').format('DD MMM YYYY HH:mm a z'),
+        }, statusCode: HttpStatus.OK };
     }
 
     async update(id: string, updateBarangDto: TabPosBarang): Promise<any> {
